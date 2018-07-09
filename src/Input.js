@@ -10,8 +10,8 @@ class Input extends Component {
 
     render() {
         return (
-            <div>
-                <input type="text" onKeyUp={this.keyUpEvent} />
+            <div className="form-group">
+                <input className="form-control" type="text" placeholder="Add new todo item" onKeyUp={this.keyUpEvent} />
             </div>
         );
     }

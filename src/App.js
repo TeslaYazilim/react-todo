@@ -8,8 +8,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [],
-      filterType: ""      
+      list: ["3 adet ekmek", "Peynir", "Organik yumurta"],
+      listCache: [],
+      filterType: ""
     };
   }
 
@@ -17,27 +18,63 @@ class App extends Component {
     var list = this.state.list;
     list.push(value);
 
+    list.sort();
+
     this.setState({
       list: list
     });
   }
 
-  filterOnClickHandler = value => {
+  filterOnChangeRadioHandler = value => {
     this.setState({
       filterType: value
     });
+  }
+
+  filterOnChangeHandler = value => {
+    var listCache = this.state.listCache;
+
+    if (value.length > 0) {
+      var list = this.state.list;
+
+      if (listCache.length === 0) {
+        this.setState({
+          listCache: list
+        });
+      }
+
+      var flist = list.filter(function (item) {
+        return item.indexOf(value) !== -1;
+      });
+
+      this.setState({
+        list: flist
+      });
+
+    } else {
+      this.setState({
+        list: listCache,
+        listCache: []
+      });
+    }
   }
 
   render() {
     return (
       <div className={"App " + this.state.filterType}>
         <Input keyUpEventHandler={this.keyUpEventHandler} />
-        {
-          this.state.list.map((item, index) =>
-            <ListItem key={index} text={item} id={index} />
-          )
-        }
-        <Filter filterOnClickHandler={this.filterOnClickHandler} />
+
+        <div className="form-group">
+          <div class="list-group">
+            {
+              this.state.list.map((item, index) =>
+                <ListItem key={index} text={item} id={index} />
+              )
+            }
+          </div>
+        </div>
+        
+        <Filter filterOnChangeRadioHandler={this.filterOnChangeRadioHandler} filterOnChangeHandler={this.filterOnChangeHandler} />
       </div>
     );
   }

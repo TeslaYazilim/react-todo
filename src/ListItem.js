@@ -13,17 +13,17 @@ class ListItem extends Component {
         var isChecked = !this.state.isChecked;
 
         this.setState({
-           isChecked: isChecked
+            isChecked: isChecked
         })
     }
 
     render() {
-        const htmlIdPredfix = "todo-item";
+        const htmlIdPredfix = "todo-item list-group-item list-group-item-action custom-control custom-checkbox";
 
         return (
             <div className={htmlIdPredfix + " " + this.state.isChecked}>
-                <input id={htmlIdPredfix + "-" + this.props.id} type="checkbox" defaultChecked={this.state.isChecked} onChange={this.handleCheckBoxChange} />
-                <label htmlFor={htmlIdPredfix + "-" + this.props.id} >{this.props.text}</label>
+                <input className="custom-control-input" id={htmlIdPredfix + "-" + this.props.id} type="checkbox" defaultChecked={this.state.isChecked} onChange={this.handleCheckBoxChange} />
+                <label className="custom-control-label" htmlFor={htmlIdPredfix + "-" + this.props.id} >{this.props.text}</label>
             </div>
         );
     }
