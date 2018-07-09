@@ -4,6 +4,7 @@ class Input extends Component {
     keyUpEvent = (e) => {
         if (e.keyCode === 13) {
             this.props.keyUpEventHandler(e.target.value);
+            e.target.value = "";
         }
     }
 

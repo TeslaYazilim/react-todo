@@ -26,3 +26,16 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.todo-item.true{
+  text-decoration: line-through;
+}
+
+.App.Done .todo-item.false{
+  display: none;
+}
+
+.App.Undone .todo-item.true{
+  display: none;
+}
