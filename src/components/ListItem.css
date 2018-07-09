@@ -1,0 +1,11 @@
+.row.ListItem.checked .textDiv {
+    text-decoration: line-through;
+}
+
+.row.ListItem .textDiv {
+    text-align: left
+}
+
+.row.ListItem.hidden{
+    display: none;
+}
