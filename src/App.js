@@ -37,9 +37,12 @@ class App extends Component {
 
   keyUpEventHandler = value => {
     var list = this.state.list;
-    list.push(value);
-
-    list.sort();
+    
+    list.push({
+      id: list.length + 1,
+      text: value,
+      isdone: false
+    });
 
     this.setState({
       list: list
