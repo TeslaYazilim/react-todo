@@ -5,7 +5,7 @@ class ListItem extends Component {
         super(props);
 
         this.state = {
-            isChecked: false
+            isChecked: this.props.isdone
         }
     }
 
@@ -15,6 +15,8 @@ class ListItem extends Component {
         this.setState({
             isChecked: isChecked
         })
+
+        this.props.listItemHandlerCheckBoxChange(this.props, isChecked);
     }
 
     render() {

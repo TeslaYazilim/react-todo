@@ -4,11 +4,32 @@ import Input from "./Input";
 import ListItem from "./ListItem";
 import Filter from "./Filter";
 
+Array.prototype.indexOfObject = function (property, value) {
+  for (var i = 0, len = this.length; i < len; i++) {
+    if (this[i][property] === value) return i;
+  }
+  return -1;
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: ["3 adet ekmek", "Peynir", "Organik yumurta"],
+      list: [{
+        id: 1,
+        text: "3 adet ekmek",
+        isdone: false
+      },
+      {
+        id: 2,
+        text: "Organik yumurta",
+        isdone: false
+      },
+      {
+        id: 3,
+        text: "Patates",
+        isdone: true
+      }],
       listCache: [],
       filterType: ""
     };
@@ -44,7 +65,7 @@ class App extends Component {
       }
 
       var flist = list.filter(function (item) {
-        return item.indexOf(value) !== -1;
+        return item.text.indexOf(value) !== -1;
       });
 
       this.setState({
@@ -59,21 +80,32 @@ class App extends Component {
     }
   }
 
+  listItemHandlerCheckBoxChange = (props, isChecked) => {
+    var list = this.state.list;
+    var index = list.indexOfObject("id", props.id);
+
+    list[index].isdone = isChecked;
+
+    this.setState({
+      list: list
+    });
+  }
+
   render() {
     return (
       <div className={"App " + this.state.filterType}>
         <Input keyUpEventHandler={this.keyUpEventHandler} />
 
         <div className="form-group">
-          <div class="list-group">
+          <div className="list-group">
             {
               this.state.list.map((item, index) =>
-                <ListItem key={index} text={item} id={index} />
+                <ListItem key={item.id} text={item.text} isdone={item.isdone} id={item.id} listItemHandlerCheckBoxChange={this.listItemHandlerCheckBoxChange} />
               )
             }
           </div>
         </div>
-        
+
         <Filter filterOnChangeRadioHandler={this.filterOnChangeRadioHandler} filterOnChangeHandler={this.filterOnChangeHandler} />
       </div>
     );
