@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import ListItem from './components/ListItem';
+import Filter from './components/Filter';
 
 var lastKey = 0;
 
@@ -11,6 +12,38 @@ class App extends Component {
     this.state={
       items: []
     };
+
+    this.getDataFromApi();
+  }
+
+  getDataFromApi = () => {
+    var newList = [];
+    fetch("https://jsonplaceholder.typicode.com/todos")
+    .then(results => {
+      return results.json();
+    })
+    .then(data => {
+      data.forEach(element => {
+        newList.push({
+          key: element.id,
+          text: element.title,
+          checked: element.completed,
+          filterResult: true
+        });
+
+        if(element.id > lastKey){
+          lastKey = element.id + 1;
+        }
+      });
+
+      console.log(newList.length);
+      
+      if(newList.length > 0){
+        this.setState({
+          items: newList
+        });
+      }
+    });
   }
 
   insertNewItem = (inputObj) => {
@@ -48,28 +81,19 @@ class App extends Component {
       if(filterStateId === -1){
         item.filterResult = true;
       }
-      else{
-        if(filterStateId === 1){
-          if(item.checked === true){
-            item.filterResult = true;
-          }
-          else{
-            item.filterResult = false;
-          }
-        }
-        else if(filterStateId === 0){
-          if(item.checked === true){
-            item.filterResult = false;
-          }
-          else{
-            item.filterResult = true;
-          }
-        }
+      else if(filterStateId === 1){
+        item.filterResult = item.checked;
+      }
+      else if(filterStateId === 0){
+        item.filterResult = !item.checked;
       }
     });
-    // this.setState({
-    //   items: currentArray
-    // });
+
+    console.log(currentArray);
+
+    this.setState({
+      items: currentArray
+    });
   }
 
   render() {
@@ -80,15 +104,7 @@ class App extends Component {
             <input type="text" className="form-control" onKeyPress={this.insertNewItem} />
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12 form-group">
-            <button className="" onClick={this.filterItemsByCompletionState(-1)}>Tümü</button>
-            <button className="" onClick={this.filterItemsByCompletionState(1)}>Bitenler</button>
-            <button className="" onClick={this.filterItemsByCompletionState(0)}>Kalanlar</button>
-          </div>
-        </div>
-        <div className="row">
-        </div>
+        <Filter filterCallback={this.filterItemsByCompletionState} searchCallback={this.searchItems} />
         <div className="row">
           <div className="col-md-12">
           {

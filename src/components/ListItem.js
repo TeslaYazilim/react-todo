@@ -9,7 +9,7 @@ class ListItem extends Component {
         return (
             <div className={"row ListItem" + (this.props.listItem.checked === true ? " checked" : "") + (this.props.listItem.filterResult === true ? " visible" : " hidden")}>
                 <div className="checkboxDiv">
-                    <input type="checkbox" onClick={this.checkItem} checked={this.props.listItem.checked === true ? "checked" : ""} />
+                    <input type="checkbox" onChange={this.checkItem} checked={this.props.listItem.checked === true ? "checked" : ""} />
                 </div>
                 <div className="textDiv" onClick={this.checkItem}>{this.props.listItem.text}</div>
             </div>
