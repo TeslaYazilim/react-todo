@@ -54,3 +54,11 @@
 .App .no-border-radius{
   border-radius: 0;
 }
+
+.loading{
+  height: 50px;
+  background-image: url('loading.gif');
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 50px 50px;
+}

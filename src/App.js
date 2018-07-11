@@ -15,33 +15,43 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [{
-        id: 1,
-        text: "3 adet ekmek",
-        isdone: false
-      },
-      {
-        id: 2,
-        text: "Organik yumurta",
-        isdone: false
-      },
-      {
-        id: 3,
-        text: "Patates",
-        isdone: true
-      }],
+      list: [],
       listCache: [],
-      filterType: ""
+      filterType: "",
+      data: [],
+      isLoading: false
     };
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData() {
+    var that = this;
+    this.setState({
+      isLoading: true
+    })
+    setTimeout(function () {
+      fetch("https://jsonplaceholder.typicode.com/todos")
+        .then(response => response.json())
+        .then(data => {
+          that.setState({
+            list: data,
+            isLoading: false
+          })
+        })
+        .catch(err => console.error(this.props.url, err.toString()))
+    },  1000);
   }
 
   keyUpEventHandler = value => {
     var list = this.state.list;
-    
+
     list.push({
       id: list.length + 1,
-      text: value,
-      isdone: false
+      title: value,
+      completed: false
     });
 
     this.setState({
@@ -68,7 +78,7 @@ class App extends Component {
       }
 
       var flist = list.filter(function (item) {
-        return item.text.indexOf(value) !== -1;
+        return item.title.indexOf(value) !== -1;
       });
 
       this.setState({
@@ -87,7 +97,7 @@ class App extends Component {
     var list = this.state.list;
     var index = list.indexOfObject("id", props.id);
 
-    list[index].isdone = isChecked;
+    list[index].completed = isChecked;
 
     this.setState({
       list: list
@@ -100,10 +110,14 @@ class App extends Component {
         <Input keyUpEventHandler={this.keyUpEventHandler} />
 
         <div className="form-group">
+          {this.state.isLoading &&
+            <div className="loading"></div>
+          }
+
           <div className="list-group">
             {
               this.state.list.map((item, index) =>
-                <ListItem key={item.id} text={item.text} isdone={item.isdone} id={item.id} listItemHandlerCheckBoxChange={this.listItemHandlerCheckBoxChange} />
+                <ListItem key={item.id} text={item.title} isdone={item.completed} id={item.id} listItemHandlerCheckBoxChange={this.listItemHandlerCheckBoxChange} />
               )
             }
           </div>
