@@ -40,7 +40,6 @@
   float: left;
   margin-right: 15px;
   margin-left: 15px;
-  border: 1px solid #ddd;
 }
 
 .todo-item{
@@ -53,8 +52,8 @@
   margin-right: 15px;
 }
 .todo-item input[type="checkbox"]{
-  width: 50px;
-  height: 50px;
+  width: 20px;
+  height: 25px;
   margin: 15px;
 }
 .todo-item input[type="checkbox"]:hover{
@@ -64,7 +63,7 @@
 .todo-item label{
   display: inline-flex;
   vertical-align: top;
-  padding: 30px 0 25px 0;
+  padding: 15px 0 15px 0;
   font-weight: 500;
   cursor: pointer;
   width: 80%;
@@ -80,9 +79,9 @@
 
 .btn.btn-danger{
   float: right;
-  padding: 21px;
-  border-radius: 0px;
-  font-size: 26px;
+    padding: 12px;
+    border-radius: 0px;
+    font-size: 20px;
 }
 .btn-group-justified{
   margin-bottom: 25px;
@@ -99,6 +98,24 @@
 .p-l-0 button,
 .p-r-0 input{
   border-radius: 0px;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+    border-top: 8px solid #c3312d;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 

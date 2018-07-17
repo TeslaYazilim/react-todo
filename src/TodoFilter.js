@@ -15,13 +15,13 @@ class TodoFilter extends Component {
         <div className="col-sm-6 p-l-0">
           <div className="btn-group btn-group-justified" role="group" aria-label="...">
             <div className="btn-group" role="group">
-              <button type="button" className="btn btn-warning">Undone</button>
+              <button onClick={this.FilterTodoItemsForType(0)} type="button" className="btn btn-warning">Undone</button>
             </div>
             <div className="btn-group" role="group">
-              <button type="button" className="btn btn-success">Done</button>
+              <button onClick={this.FilterTodoItemsForType(1)} type="button" className="btn btn-success">Done</button>
             </div>
             <div className="btn-group" role="group">
-              <button type="button" className="btn btn-info">All</button>
+              <button onClick={this.FilterTodoItemsForType(2)} type="button" className="btn btn-info">All</button>
             </div>
           </div>
         </div>
@@ -33,6 +33,11 @@ class TodoFilter extends Component {
   FilterTodoItems = (e) =>{
     this.props.FilterArrayItems(e.target.value);
   }
+
+  FilterTodoItemsForType =(filterType)=> (e) =>{
+    this.props.FilterTodoItemsForType(filterType);
+  }
+
 
 
 }
